@@ -2,8 +2,9 @@ library(shiny)
 library(shinyjs)
 library(ggplot2)
 library(fitdistrplus)
+library(gamlss.dist)
 
-hidden(span(id = "a"), div(id = "b"))
+#hidden(span(id = "a"), div(id = "b"))
 
 # Define UI for data upload app ----
 ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis", 
@@ -89,24 +90,90 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                                              plotOutput("binPlot")         
                                          )
                                      )
+                            ),
+                            tabPanel(value = "sum", title = "Summary", br(),
+                                sidebarLayout(
+                                    sidebarPanel(
+                                        verbatimTextOutput("summaryGoF")
+                                    ),
+                                    mainPanel(
+                                        plotOutput("summaryPlot")
+                                    )
+                                )             
                             )
                         )
                     )
            ),
            tabPanel(value = "about", title = "About",
                     fluidPage(
-     #                   tags$h4("about page test")        
-                        tags$p("This app was designed to help facilitate the process of fitting a distribution to a discrete random variable. 
-                        To try it, just go to the 'Input' tab and upload a CSV file. Make sure to select the appropriate settings, then click the 'Run Analysis' 
-                        button at the bottom. This will take you to the 'Output' tab, where you can observe some possible distributions. If the dispersion is not
-                        significantly different than 1, the best choice is regular Poisson model, but if either under- or overdispersion is present, alternative models 
-                        are suggested: for instance, a Binomial (underdispersion) or a Negative Binomial model (overdispersion) might be a better choice. It's also 
-                        possible to modify the Poisson model to better fit the data; this is called a Zero-Modified (ZM) Poisson model, and it is presented as an option, 
-                        if dispersion is present. When choosing a final model, it's a good idea to compare the AIC and BIC values, as well as the p-value of the Chi-square 
-                        test in each case. All of this information is presented.")
-                    )
+                        
+                        withMathJax(),
+
+                        tags$div(HTML("<script type='text/x-mathjax-config'>
+                            MathJax.Hub.Config({
+                            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+                            });
+                            </script>
+                        ")),
+                        
+                        tags$style(HTML("hr {border-top: 1px solid #dddddd;}")),
+                        
+          #              helpText('An irrational number $\\sqrt{2}$
+          # and a fraction $1-\\frac{1}{2}$'),
+                        
+                        p("This app was designed to facilitate the process of fitting a distribution to a discrete random variable."),
+                        
+                        HTML("<p>To try it, just click on the <i>Input</i> tab and upload a CSV file. Make sure to select the appropriate settings for the given file, then click the <i>Run Analysis</i> button at the bottom. This will take you to the <i>Output</i> tab, where you can observe some distributions whose parameters are optimized based on their MLE.</p>"),
+                        
+                        h3("Distributions"),
+                        
+                        hr(),
+                        
+                        h4("Poisson Model"),
+                        
+                        p("The simplest of the models presented is the Poisson model. This model is commonly used when modeling discrete random variables, but in its definition is an assumption that sometimes leads to a suboptimal fit: $\\text{E}[\\text{N}] = \\text{Var}[\\text{N}]$. If the data show clear evidence of under- or overdispersion, then one of the other models is probably a better choice."),
+                        
+                        hr(),
+                        
+                        h4("Negative Binomial Model"),
+                        
+                        p("If the variable exhibits overdispersion $(\\text{Var}[\\text{N}] > \\text{E}[\\text{N}])$, the Negative Binomial distribution is probably a good choice."),
+                        
+                        hr(),
+                        
+                        h4("Binomial Model"),
+                        
+                        p("If the variable exhibits clear underdispersion $(\\text{Var}[\\text{N}] < \\text{E}[\\text{N}])$, the Binomial distribution is probably a good choice."),
+                        
+                        hr(),
+                        
+                        h4("Zero-Modified Models"),
+                        
+                        p("Other options exist beyond the distributions presented here. For instance, the ZM Poisson distribution has become increasingly popular among statistical practitioners."),
+                        HTML("<p>With that said, there are plenty of people (see <a href = 'https://statisticalhorizons.com/zero-inflated-models' target='_blank'> here</a>) who believe the distributions here should suit almost all occassions, when fitting a distribution to a given discrete random variable."),
+                        
+                        hr(),
+                        
+                        h3("Goodness-of-Fit"),
+                        
+                        hr(),
+                        
+                        h4("Summary Statistics"),
+                        
+                        HTML("<p>The <i>Summary</i> panel  on the <i>Output</i> page contains a lot of additional information that can help determine which of the choices is best for a given scenario, including the $\\chi^2$ test statistic, Akaike's Information Criterion $(\\text{AIC})$, and Bayesian Information Criterion $(\\text{BIC})$; for each of these selection criteria, the distribtution that maximizes the value is best.</p>"),
+                        
+                        hr(),
+                        
+                        h4("Summary Plots"),
+                        
+                        HTML("<p>The <i>Summary</i> panel also displays several plots that compare each of the best-fit distributions to the empirical distribution. These plots can be a valuable tool in discerning not just which distribution is best, but also in identifying specific features of the data that the certain distributions fail to represent.</p>"),
+                        
+                        hr(),
+                        
+                        HTML("<p>Copyright &#169; 2021 by Joe Knittel</p>")
+                        )
+                   )
            )
-    )
 
 
 # Define server logic to read selected file ----
@@ -115,6 +182,8 @@ server <- function(input, output, session) {
     hideTab(inputId = "distributions", target = "pois")
     hideTab(inputId = "distributions", target = "nb")
     hideTab(inputId = "distributions", target = "bin")
+    hideTab(inputId = "distributions", target = "sum")
+    
     
     output$header <- renderUI({
         req(input$file1)
@@ -142,12 +211,18 @@ server <- function(input, output, session) {
         
         df
     })
+    
+    gofPlot <- reactive({
+        
+        
+    })
         
     observeEvent(input$button,{
         shinyjs::hide("loadtxt")
         showTab(inputId = "distributions", target = "pois")
         showTab(inputId = "distributions", target = "nb")
         showTab(inputId = "distributions", target = "bin")
+        showTab(inputId = "distributions", target = "sum")
         updateTabsetPanel(session, "distributions", selected = "pois")
         updateNavbarPage(session, "nav", selected = "output")
     })
@@ -232,27 +307,53 @@ server <- function(input, output, session) {
                     value = 2*max(df[,input$column]))
     })
 
-    output$binProbSlider <- renderUI({
-        df <- getData()
-        sliderInput(inputId = "binProbSlider", label = "p", min = 0, max = 1, 
-                    value = 0.5)
-    })
+#    output$binProbSlider <- renderUI({
+#        df <- getData()
+#        sliderInput(inputId = "binProbSlider", label = "prob", min = 0, max = 1, 
+#                    value = 0.5)
+#    })
     
     output$binSummary <- renderPrint({
         df <- getData()
-        fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = input$binProbSlider),
+        fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = 0.5),
                                         fix.arg = list(size = input$binSizeSlider))
         return(summary(fitbin))
     })
     
     output$binPlot <- renderPlot({
         df <- getData()
-        fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = input$binProbSlider),
+        fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = 0.5),
                                         fix.arg = list(size = input$binSizeSlider))
         return(plot(fitbin))
     })
     
+    output$summaryPlot <- renderPlot({
+        df <- getData()
+        fitp <- fitdistrplus::fitdist(df[,input$column], "pois")
+        fitnb <- fitdistrplus::fitdist(df[,input$column], "nbinom")
+        fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = 0.5),
+                                        fix.arg = list(size = input$binSizeSlider))
+        par(mfrow = c(1, 4))
+        plot.legend <- c("Pois", "NB", "B")
+        denscomp(list(fitp, fitnb, fitbin), legendtext = plot.legend)
+        qqcomp(list(fitp, fitnb, fitbin), legendtext = plot.legend)
+        cdfcomp(list(fitp, fitnb, fitbin), legendtext = plot.legend)
+        ppcomp(list(fitp, fitnb, fitbin), legendtext = plot.legend)
+        
+    #       return(qqcomp(list(fitp, fitnb, fitbin)))
+    })
+
+    output$summaryGoF <- renderPrint({
+        df <- getData()
+        fitp <- fitdistrplus::fitdist(df[,input$column], "pois")
+        fitnb <- fitdistrplus::fitdist(df[,input$column], "nbinom")
+        fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = 0.5),
+                                        fix.arg = list(size = input$binSizeSlider))
+        return(gofstat(list(fitp,fitnb, fitbin),fitnames=c("Pois", "NB", "B")))
+    })
+    
 }
+
 
 # Create Shiny app ----
 shinyApp(ui, server)

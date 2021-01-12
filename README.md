@@ -6,7 +6,7 @@
 
 <hr>
 
-**Live Demo**: https://joe-knittel.shinyapps.io/shiny_app/
+**Live Demo**: <a href = "https://joe-knittel.shinyapps.io/shiny_app/" target = "_blank">https://joe-knittel.shinyapps.io/shiny_app/</a>
 
 <hr>
 

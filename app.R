@@ -66,8 +66,30 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                                     )
                                 )
                             ),
-                            tabPanel(value = "nb", title = "Negative Binomial"),
-                            tabPanel(value = "bin", title = "Binomial")
+                            tabPanel(value = "nb", title = "Negative Binomial", br(),
+                                     sidebarLayout(
+                                         sidebarPanel(
+                                             tableOutput("negbinTable"),
+                                             verbatimTextOutput("negbinSummary")
+                                         ),
+                                         mainPanel(
+                                             plotOutput("negbinPlot")         
+                                         )
+                                     )
+                            ),
+                            tabPanel(value = "bin", title = "Binomial", br(),
+                                     sidebarLayout(
+                                         sidebarPanel(
+                                             tableOutput("binTable"),
+                                             uiOutput("binSizeSlider"),
+                                             uiOutput("binProbSlider"),
+                                             verbatimTextOutput("binSummary")
+                                         ),
+                                         mainPanel(
+                                             plotOutput("binPlot")         
+                                         )
+                                     )
+                            )
                         )
                     )
            ),
@@ -183,6 +205,53 @@ server <- function(input, output, session) {
             plot(fitp)
         )
     })
+    
+    output$negbinTable <- renderTable({
+        
+    })
+    
+    output$negbinSummary <- renderPrint({
+        df <- getData()
+        fitnb <- fitdistrplus::fitdist(df[,input$column], "nbinom")
+        return(summary(fitnb))
+    })
+    
+    output$negbinPlot <- renderPlot({
+        df <- getData()
+        fitnb <- fitdistrplus::fitdist(df[,input$column], "nbinom")
+        return(plot(fitnb))
+    })
+    
+    output$binTable <- renderTable({
+        
+    })
+    
+    output$binSizeSlider <- renderUI({
+        df <- getData()
+        sliderInput(inputId = "binSizeSlider", label = "m", min = max(df[,input$column]), max = 4*max(df[,input$column]), 
+                    value = 2*max(df[,input$column]))
+    })
+
+    output$binProbSlider <- renderUI({
+        df <- getData()
+        sliderInput(inputId = "binProbSlider", label = "p", min = 0, max = 1, 
+                    value = 0.5)
+    })
+    
+    output$binSummary <- renderPrint({
+        df <- getData()
+        fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = input$binProbSlider),
+                                        fix.arg = list(size = input$binSizeSlider))
+        return(summary(fitbin))
+    })
+    
+    output$binPlot <- renderPlot({
+        df <- getData()
+        fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = input$binProbSlider),
+                                        fix.arg = list(size = input$binSizeSlider))
+        return(plot(fitbin))
+    })
+    
 }
 
 # Create Shiny app ----

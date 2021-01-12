@@ -94,7 +94,10 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                             tabPanel(value = "sum", title = "Summary", br(),
                                 sidebarLayout(
                                     sidebarPanel(
-                                        verbatimTextOutput("summaryGoF")
+                                        verbatimTextOutput("summaryGoF"),
+                                        hr(),
+                                        selectInput("exportChoice", "Choose Distribution:", choices = c("Poisson", "Negative Binomial", "Binomial")),
+                                        downloadButton("exportButton", label = "Export Model", style = "width:100%")
                                     ),
                                     mainPanel(
                                         plotOutput("summaryPlot")
@@ -302,11 +305,11 @@ server <- function(input, output, session) {
     output$negbinPlot <- renderPlot({
         df <- getData()
         fitnb <- fitdistrplus::fitdist(df[,input$column], "nbinom")
+#        saveRDS(summary(fitnb), file = "C:\resultData.rds")        
         return(plot(fitnb))
     })
     
     output$binTable <- renderTable({
-        
     })
     
     output$binSizeSlider <- renderUI({
@@ -360,6 +363,69 @@ server <- function(input, output, session) {
         return(gofstat(list(fitp,fitnb, fitbin),fitnames=c("Pois", "NB", "B")))
     })
     
+#     observeEvent(input$exportButton,
+#     {
+#         req(input$file1)
+#         
+#         df <- getData()
+#         
+#         choice <- input$exportChoice
+#         
+#         if(choice == "Poisson"){
+#             model <- fitdistrplus::fitdist(df[,input$column], "pois") 
+#         } else if(choice == "Negative Binomial"){
+#             model <- fitdistrplus::fitdist(df[,input$column], "nbinom")
+#         } else {
+#             model <- fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = 0.5),
+#                                                      fix.arg = list(size = input$binSizeSlider))
+#         }
+#         
+# #        path <- paste(substr(input$file1$datapath,1,nchar(t)-4), "_", choice, "_Model.rds", sep ="")
+#         
+#     #    path <- paste(input$file1$datapath, "\\", choice, "_Model.rds", sep = "")
+#         
+#         path = "C:\\"
+#         
+#        return(saveRDS(model, file = path))    
+#    })
+ 
+    output$exportButton <- downloadHandler(
+        
+        filename = function() {
+             choice <- input$exportChoice
+            
+            if (choice == "Poisson"){
+                name = "Poisson"
+            } else if (choice == "Negative Binomial") {
+                name = "NB"
+            } else {
+                name = "B"
+            }
+             
+            paste(name, "_Model", ".rds", sep="")
+        },
+        content = function(file) {
+            req(input$file1)
+            
+            df <- getData()
+            
+             choice <- input$exportChoice
+             
+             if(choice == "Poisson"){
+                 model <- fitdistrplus::fitdist(df[,input$column], "pois")
+             } else if(choice == "Negative Binomial"){
+                 model <- fitdistrplus::fitdist(df[,input$column], "nbinom")
+             } else {
+                 model <- fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = 0.5),
+                                                          fix.arg = list(size = input$binSizeSlider))
+             }
+             
+             saveRDS(summary(model), file)
+        }    
+            
+    
+    )
+       
 }
 
 

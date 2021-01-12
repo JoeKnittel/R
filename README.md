@@ -4,6 +4,7 @@
 
 *This project was completed in my spare time as a fun coding experiment.*
 
+<img src = "https://raw.githubusercontent.com/JoeKnittel/R/main/Images/demo.gif">
 
 <hr>
 

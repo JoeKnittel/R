@@ -131,7 +131,9 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                         
                         h4("Poisson Model"),
                         
-                        p("The simplest of the models presented is the Poisson model. This model is commonly used when modeling discrete random variables, but in its definition is an assumption that sometimes leads to a suboptimal fit: $\\text{E}[\\text{N}] = \\text{Var}[\\text{N}]$. If the data show clear evidence of under- or overdispersion, then one of the other models is probably a better choice."),
+                        p("The simplest of the models presented is the Poisson model. This model is commonly used when modeling discrete random variables, but in its definition is an assumption that sometimes leads to a suboptimal fit: $\\text{E}[\\text{N}] = \\text{Var}[\\text{N}]$."),
+                        
+                        p("If the data show clear evidence of under- or overdispersion, then one of the other models is probably a better choice."),
                         
                         hr(),
                         

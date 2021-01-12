@@ -137,8 +137,11 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                         
                         h4("Negative Binomial Model"),
                         
-                        p("If the variable exhibits overdispersion (i.e., $\\text{Var}[\\text{N}] > \\text{E}[\\text{N}]$), the Negative Binomial distribution is probably a good choice. Essentially, the Negative Binomial model is an extension of the Poisson model; it treats the random variable $N$ as a mixture of Poisson and Gamma processes: $(N|\\lambda) \\sim \\text{Pois}(\\lambda)$, where $\\lambda \\sim \\text{Gamma}(\\alpha, \\theta)$, resulting in an unconditional distribution $N \\sim \\text{NB}(r=\\alpha, \\beta=\\theta)$."),
+                        p("If the variable exhibits overdispersion (i.e., $\\text{Var}[\\text{N}] > \\text{E}[\\text{N}]$), the Negative Binomial distribution is probably a good choice, since $\\text{E}[\\text{N}] = r\\beta$ and $\\text{Var}[\\text{N}]=r\\beta(1+\\beta) \\rightarrow \\text{Var}[\\text{N}]=\\text{E}[\\text{N}] \\cdot (1+\\beta) > \\text{E}[\\text{N}]$."),
                         
+                        p("Essentially, the Negative Binomial model is an extension of the Poisson model; it treats the random variable $\\text{N}$ as a mixture of Poisson and Gamma processes: $(\\text{N}|\\lambda) \\sim \\text{Pois}(\\lambda)$, where $\\lambda \\sim \\text{Gamma}(\\alpha, \\theta)$, resulting in an unconditional distribution $N \\sim \\text{NB}(r=\\alpha, \\beta=\\theta)$."),
+                        
+          
                         hr(),
                         
                         h4("Binomial Model"),
@@ -149,7 +152,7 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                         
                         h4("Zero-Modified Models"),
                         
-                        HTML("<p>Other options exist beyond the distributions presented here. For instance, the Zero-inflated Poisson (ZI Poisson) distribution has become increasingly popular among statistical practitioners as a way to capture overdispersion in a random variable and/or as a way to better fit a model to a sample exhibiting an excess of 0-counts. It does so by setting $\\text{Pr}(N=0) = p^M_0 = p_0 + \\epsilon$, and defining $\\text{Pr}(N=k) = p_k^M = (\\frac{1-p_0^M}{1-p_0})p_k$ for $k\\in $ &#8469;.</p>"),
+                        HTML("<p>Other options exist beyond the distributions presented here. For instance, the Zero-inflated Poisson (ZI Poisson) distribution has become increasingly popular among statistical practitioners as a way to capture overdispersion in a random variable and/or as a way to better fit a model to a sample exhibiting an excess of 0-counts. It does so by setting $\\text{Pr}(\\text{N}=0) = p^M_0 > p_0$, and defining $\\text{Pr}(\\text{N}=k) = p_k^M = \\left(\\frac{1-p_0^M}{1-p_0}\\right) \\cdot p_k$ for $k\\in \\mathbb{N}$.</p>"),
                         
                         HTML("<p>We can even create an Extended Truncated Negative Binomial (ETNB) model by modifying the Negative Binomial model in two ways: setting $p_0 = 0$ (i.e., truncating the distribution's support) and allowing the parameter $r$ to be negative.</p>"),
                         

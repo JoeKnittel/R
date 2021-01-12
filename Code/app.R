@@ -153,7 +153,7 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                         
                         HTML("<p>We can even create an Extended Truncated Negative Binomial (ETNB) model by modifying the Negative Binomial model in two ways: setting $p_0 = 0$ (i.e., truncating the distribution's support) and allowing the parameter $r$ to be negative.</p>"),
                         
-                        HTML("<p>With that said, there are plenty of people (see <a href = 'https://statisticalhorizons.com/zero-inflated-models' target='_blank'> here</a>) who believe the distributions here should suit almost all occassions, when fitting a distribution to a given discrete random variable."),
+                        HTML("<p>With that said, there are plenty of people (see <a href = 'https://statisticalhorizons.com/zero-inflated-models' target='_blank'> here</a>) who believe that the distributions presented in this app should suit almost all occassions, when fitting a distribution to a given discrete random variable."),
                         
                         hr(),
                         

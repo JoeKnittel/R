@@ -126,7 +126,7 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                         
                         p("This app was designed to facilitate the process of fitting a distribution to a discrete random variable."),
                         
-                        HTML("<p>To try it, just click on the <i>Input</i> tab and upload a CSV file. Make sure to select the appropriate settings for the given file, then click the <i>Run Analysis</i> button at the bottom. This will take you to the <i>Output</i> tab, where you can observe some distributions whose parameters are optimized based on their MLE.</p>"),
+                        HTML("<p>To try it, just click on the <font style = 'background-color: #d4ebf2'>Input</font> page and upload a CSV file. Make sure to select the appropriate settings for the given file, then click the <font style = 'background-color: #f2dbd4'>Run Analysis</font> button at the bottom. This will take you to the <font style = 'background-color: #d4ebf2'>Output</font> page, where you can observe some distributions whose parameters are estimated using maximum likelihood estimation (MLE).</p>"),
                         
                         h3("Distributions"),
                         
@@ -134,7 +134,7 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                         
                         h4("Poisson Model"),
                         
-                        p("The simplest of the models presented is the Poisson model. This model is commonly used when modeling discrete random variables, but in its definition is an assumption that sometimes leads to a suboptimal fit: $\\text{E}[\\text{N}] = \\text{Var}[\\text{N}]$."),
+                        p("The simplest of the models presented is the Poisson model. This distribution is commonly used when modeling discrete random variables, but in its definition is an assumption that sometimes leads to a sub-optimal fit: $\\text{E}[\\text{N}] = \\text{Var}[\\text{N}]$."),
                         
                         p("If the data show clear evidence of under- or overdispersion, then one of the other models is probably a better choice."),
                         
@@ -161,7 +161,7 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                         
                         HTML("<p>We can even create an Extended Truncated Negative Binomial (ETNB) model by modifying the Negative Binomial model in two ways: setting $p_0 = 0$ (i.e., truncating the distribution's support) and allowing the parameter $r$ to be negative.</p>"),
                         
-                        HTML("<p>With that said, there are plenty of people (see <a href = 'https://statisticalhorizons.com/zero-inflated-models' target='_blank'> here</a>) who believe that the distributions presented in this app should suit almost all occassions, when fitting a distribution to a given discrete random variable."),
+                        HTML("<p>With that said, there are plenty of people (see <a href = 'https://statisticalhorizons.com/zero-inflated-models' target='_blank'> here</a>) who believe that the distributions presented in this app should suit almost all occasions, when fitting a distribution to a given discrete random variable."),
                         
                         hr(),
                         
@@ -171,16 +171,38 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                         
                         h4("Summary Statistics"),
                         
-                        HTML("<p>The <i>Summary</i> panel  on the <i>Output</i> page contains a lot of additional information that can help determine which of the choices is best for a given scenario, including the $\\chi^2$ test statistic, Akaike's Information Criterion (AIC), and Bayesian Information Criterion (BIC); for each of these selection criteria, the distribtution that maximizes the value is best.</p>"),
+                        HTML("<p>The <font style = 'background-color: #d4f2db'>Summary</font> tab  on the <font style = 'background-color: #d4ebf2'>Output</font> page contains a lot of additional information that can help determine which of the choices is best for a given scenario, including the $\\chi^2$ test statistic, Akaike's Information Criterion (AIC), and Bayesian Information Criterion (BIC); for each of these selection criteria, the distribution that maximizes the statistic is best.</p>"),
                         
                         hr(),
                         
                         h4("Summary Plots"),
                         
-                        HTML("<p>The <i>Summary</i> panel also displays several plots that compare each of the best-fit distributions to the empirical distribution. These plots can be a valuable tool in discerning not just which distribution is best, but also in identifying specific features of the data that the certain distributions fail to represent.</p>"),
+                        HTML("<p>The <font style = 'background-color: #d4f2db'>Summary</font> tab also displays several plots that compare each of the best-fit distributions to the empirical distribution. These plots can be a valuable tool in discerning not just which distribution is best, but also in identifying specific features of the data that the certain distributions fail to represent.</p>"),
                         
                         hr(),
-                        
+          
+                        h3("Model Usage"), 
+          
+                        hr(),
+          
+                        h4("Selecting Model"),
+          
+                        hr(),
+          
+                        HTML("<p>Once you've determined the best model based on your selection criteria of choice, choose your favorite model with the dropdown menu at the bottom of the <font style = 'background-color: #d4f2db'>Summary</font> tab.</p>"),
+          
+                        HTML("<p>Then, click on the <font style = 'background-color: #f2dbd4'>Export Model</font> button right below it. This will store the model in a <font style = 'background-color:#dbd4f2'>.rds file</font> for later usage.</p>"),
+ 
+                        hr(),
+
+                        h4("Loading Model into R"),
+
+                        hr(),
+
+                        HTML("<p>After you've downloaded your model of choice, you can load it into R using the following code: <font style = 'background-color: #dbd4f2'>readRDS(path)</font>, where path is the path to your downloaded model file.</p>"),
+
+                        hr(),
+          
                         HTML("<p>Copyright &#169; 2021 by Joe Knittel</p>")
                         )
                    )

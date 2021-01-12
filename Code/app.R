@@ -137,7 +137,7 @@ ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis",
                         
                         h4("Negative Binomial Model"),
                         
-                        p("If the variable exhibits overdispersion (i.e., $\\text{Var}[\\text{N}] > \\text{E}[\\text{N}]$), the Negative Binomial distribution is probably a good choice. Essentially, the Negative Binomial model is an extension of the Poisson model; it treats the random variable $N$ as a mixture of Poisson and Gamma processes: $(N|\\lambda) \\sim \\text{Pois}(\\lambda)$, where $\\lambda \\sim \\text{Gamma}(\\alpha, \\theta)$, resulting in an unconditional distribution $N \\sim \\text{NB}(\\alpha, \\theta)$."),
+                        p("If the variable exhibits overdispersion (i.e., $\\text{Var}[\\text{N}] > \\text{E}[\\text{N}]$), the Negative Binomial distribution is probably a good choice. Essentially, the Negative Binomial model is an extension of the Poisson model; it treats the random variable $N$ as a mixture of Poisson and Gamma processes: $(N|\\lambda) \\sim \\text{Pois}(\\lambda)$, where $\\lambda \\sim \\text{Gamma}(\\alpha, \\theta)$, resulting in an unconditional distribution $N \\sim \\text{NB}(r=\\alpha, \\beta=\\theta)$."),
                         
                         hr(),
                         

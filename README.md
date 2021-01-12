@@ -15,4 +15,4 @@
 ### Contained in this repository:
 
 - Code written in R
-- Sample data
+- Sample dataset used in demo

@@ -1,4 +1,4 @@
-# R
+# Shiny-App-1
 
 ## Shiny App for Fitting a Distribution to a Discrete Random Variable
 

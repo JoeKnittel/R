@@ -1,6 +1,6 @@
-# R
+# Shiny-App-1
 
-## Shiny App for Fitting a Distribution to a Discrete Random Variable
+## Shiny App for Fitting a Distribution to a Discrete Random Variable (2021)
 
 *This project was completed in my spare time as a fun coding experiment.*
 

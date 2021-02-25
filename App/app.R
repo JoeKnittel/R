@@ -3,7 +3,7 @@ library(shinyjs)
 library(fitdistrplus)
 
 # defines the app's ui
-ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis", 
+ui <- navbarPage(id = "nav", title = "Discrete Random Variable Analysis", selected = "about", 
 
         # input page ui   
         tabPanel(value = "input", title = "Input",
@@ -413,6 +413,9 @@ server <- function(input, output, session) {
     output$binSummary <- renderPrint({
     
         df <- getData()
+
+        req(input$column)
+        req(input$binSizeSlider)
         
         fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = 0.5),
                                         fix.arg = list(size = input$binSizeSlider))
@@ -424,6 +427,9 @@ server <- function(input, output, session) {
 
         df <- getData()
         
+        req(input$column)
+        req(input$binSizeSlider)
+        
         fitbin <- fitdistrplus::fitdist(df[,input$column], dist = "binom", start = list(prob = 0.5),
                                         fix.arg = list(size = input$binSizeSlider))
         return(plot(fitbin))
@@ -434,6 +440,9 @@ server <- function(input, output, session) {
 
         df <- getData()
         
+        req(input$column)
+        req(input$binSizeSlider)
+
         fitp <- fitdistrplus::fitdist(df[,input$column], "pois")
         
         fitnb <- fitdistrplus::fitdist(df[,input$column], "nbinom")

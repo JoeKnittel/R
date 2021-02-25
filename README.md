@@ -2,7 +2,7 @@
 
 ## Fitting a Distribution to a Discrete Random Variable (2021)
 
-*This project was completed in my spare time as a fun coding experiment.*
+*Though this project was completed as a fun coding experiment, it's a tool with potential real-world actuarial utility.*
 
 Various phenomena, from an individual's number of doctor visits per year to how often a given region is struck by a hurricane, can be represented by <a href = "https://courses.lumenlearning.com/boundless-statistics/chapter/discrete-random-variables/">discrete random variables</a>. With some sample data, a distribution can be fit to such phenomena, and it can be used to make predictions about future events.
 

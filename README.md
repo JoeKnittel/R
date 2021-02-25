@@ -11,7 +11,7 @@ The concept of discrete random variables plays a crucial role in the realm of in
 This project is coded in R, and it leverages the <a href = "https://shiny.rstudio.com/">Shiny</a> package, which brings the app to life. The whole process of fitting a distribution to a discrete random variable is reduced to uploading a CSV file, selecting the structure of the file, clicking a button to estimate parameters, and comparing selection criteria for a collection of model choices. The app even allows users to download their favorite model to facilitate further analysis within R.  
 
 
-<img src = "https://raw.githubusercontent.com/JoeKnittel/R/main/Images/demo-2.gif">
+<img src = "https://raw.githubusercontent.com/JoeKnittel/R/main/Images/app_demo.gif">
 
 <hr>
 

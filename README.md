@@ -15,7 +15,7 @@ This project is coded in R, and it leverages the <a href = "https://shiny.rstudi
 
 <hr>
 
-### Live Demo: <a href = "https://joe-knittel.shinyapps.io/fitting-a-discrete-distribution/" target = "_blank">https://joe-knittel.shinyapps.io/fitting-a-discrete-distribution/</a>
+### Live Demo: <a href = "https://joe-knittel.shinyapps.io/fitting-a-discrete-distribution/" target = "_blank">https://joe-knittel.shinyapps.io/fitting-a-discrete-distribution</a>
 
 <hr>
 

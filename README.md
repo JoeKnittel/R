@@ -1,4 +1,4 @@
-# Shiny-App-1
+# Shiny-App-2
 
 ## Fitting a Distribution to a Discrete Random Variable (2021)
 
